@@ -1,0 +1,283 @@
+
+{% load extras %}
+{% load static %}
+
+
+
+    <!--js-->
+    
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'js/demo/datatables-demo.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src=" {% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+    <link href="{% static 'vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
+    <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    
+
+    <!--css-->
+    <link rel="stylesheet" href="{% static 'document/css/main.css' %}">
+    <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<style>
+    @media(max-width:500px){
+        .col-sm-12{
+            font-size:12px;
+        }
+    }
+</style>
+
+<div class="row mt-5">
+    <div class="col-xl-3 col-md-6 mb-3">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase ml-3">오늘 나의 출퇴근</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800 ml-3">{{ request.session.user_name }}님</div>
+                    </div>
+                    <div class="col mr-2">
+                        <div class="row">
+                            <a href="/commute/commute/attendance/" class="btn btn-primary">출근</a>
+                            &nbsp
+                            <a href="/commute/commute/offwork" class="btn btn-danger">퇴근</a>
+                            &nbsp
+                            <a  id="home_attendance" class="btn btn-primary">재택출근</a>
+                            &nbsp
+                            <a href="/commute/commute/home_offwork" class="btn btn-danger">재택퇴근</a>
+                            <!-- Button trigger modal -->
+                            <!-- 모달을 열기 위한 버튼 -->
+                            <!-- <button type="button" class="btn btn-primary btn-lg" id="openModalBtn">
+                                모달 보기 버튼
+                            </button>
+                            <! 모달 영역 -->
+                            <!-- <div id="modalBox" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">모달 타이틀</h4>
+                                </div>
+                                <div class="modal-body">
+                                    내용
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary">확인</button>
+                                    <button type="button" class="btn btn-default" id="closeModalBtn">취소</button>
+                                </div>
+                                </div>
+                            </div>
+                            </div> -->
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+
+
+
+<!--tab 버튼-->
+<ul class="nav nav-tabs row" role="tablist" id="myTab">
+    <li role="presentation" class="active col-xs-6"><a href="#condition" aria-controls="condition" role="tab" data-toggle="tab">연구원출퇴근현황({{month}}월)</a></li>
+    <li role="presentation" class="col-xs-6"><a href="#history" aria-controls="history" role="tab" data-toggle="tab">연구원출퇴근기록</a></li>
+    
+</ul>
+<!--tab content-->
+<div class="tab-content">
+    
+    <!--연구원출퇴근현황-->
+    <div role="tabpanel" class="tab-pane active" id="condition">
+        <!--연월로 출퇴근현황 조회 폼-->
+        <form method="GET" class="mt-4 mb-4">
+            <select class="form-control col-md-1" name="year" id="year-selectbox"></select>
+            <select class="form-control col-md-1" name="month" id="month-selectbox"></select>
+            <input type="submit" class="btn btn-info" value="조회"/>
+        </form>
+        <table class="table table-bordered">
+            <tr>
+                <td></td>
+                {% for username in user_commute_conditions %}
+                    <td>{{username}}</td>
+                {% endfor %}
+                
+            </tr>
+
+            <tr>
+                <td>출근율(주말포함)</td>
+                {% for user_name,value in  user_commute_conditions.items %}
+                    <td>{{value.include_weekends_commute_rate}}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>결근일수(주말포함)</td>
+                {% for user_name,value in  user_commute_conditions.items %}
+                    <td>{{value.include_weekends_number_absences}}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>출근율(주말제외)</td>
+                {% for user_name,value in  user_commute_conditions.items %}
+                    <td>{{value.exclude_weekends_commute_rate}}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>결근일수(주말제외)</td>
+                {% for user_name,value in  user_commute_conditions.items %}
+                    <td>{{value.exclude_weekends_number_absences}}</td>
+                {% endfor %}
+            </tr>
+            {% for day in day_list %}
+                <tr>
+                    <td>{{day}}</td>
+                    {% for user_name,value in  user_commute_conditions.items %}
+                        
+                        {% if value.commute_status|index:forloop.parentloop.counter0 == True %}     
+                            <td><i class="glyphicon glyphicon-ok"></i></td>
+                        {% elif value.commute_status|index:forloop.parentloop.counter0 == False%}
+                            <td><i class="glyphicon glyphicon-remove"></i></td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
+                    {% endfor %}
+                    
+                </tr>
+            {% endfor %}
+
+
+        </table>
+
+    </div>
+    <!--end 연구원출퇴근현황-->
+
+    <!--연구원출퇴근기록-->
+    <div role="tabpanel" class="tab-pane" id="history">
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <form action="/commute/home/#history" method="GET">
+                    <div class="form-inline form-group">
+                        <input class="form-control col-md-2" value="{{start}}" type="date" name="start">
+                        &nbsp;~&nbsp;
+                        <input class="form-control col-md-2" value="{{end}}" type="date" name="end">&nbsp;
+                        <input type="submit" class="btn btn-info" value="조회">
+                    </div>
+                </form>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                <form action="" method="post">
+                {% csrf_token %}
+                    <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr style="text-align: center;">
+                                <th>No</th>
+                                <th>이름</th>
+                                <th>전공</th>
+                                <th>구분</th>
+                                <th>출/퇴근시간</th>
+                                <th>비고</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for commute in commutes %}
+                            <tr>
+                                <td class="number" style="cursor:hand;">{{ forloop.counter  }}</td>
+                                <td style="cursor:hand;">{{ commute.user.user_name }}</td>
+                                <td style="cursor:hand;">{{ commute.user.user_major }}</td>
+                                <td style="cursor:hand;">{{ commute.get_commute_category_display }}</td>
+                                <td style="cursor:hand;">{{ commute.commute_date|date:'Y-m-d H:i:s' }}</td>
+                                <td style="cursor:hand;">{{ commute.commute_reason }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </form>    
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end 연구원출퇴근기록-->
+
+    
+    <form action="/commute/home_attendance/" method="post" id="home_attendance_form" style="display:none;">
+        {% csrf_token %}
+        <input id="commute_reason" name="commute_reason">
+    </form>
+
+        
+
+<script>
+
+    $(document).ready(function(){
+        initYearSelectbox();
+        initMonthSelectbox();
+    });
+
+    // 연도 선택 초기화(2015~현재)
+    function initYearSelectbox(){
+        var cur_year  = new Date().getFullYear(); 
+        var optionTag = createOptionTag(2021,cur_year,parseInt("{{year}}"));
+        $("#year-selectbox").append(optionTag);
+    }
+
+    // 월 선택 초기화
+    function initMonthSelectbox(){
+        // getMonth 0 ~ 11 
+        var cur_month = new Date().getMonth() + 1;
+        var optionTag = createOptionTag(1,12,parseInt("{{month}}"));
+        $("#month-selectbox").append(optionTag);
+    }
+    
+    function createOptionTag(start,end,selected_value){
+        /*
+          selectbox 범위 지정 후 선택
+          Args
+                start: 범위시작값
+                end: 범위종료값
+                selected_value: 선택값
+          Return
+                생성된 option 반환
+                예)
+                "
+                    <option>2015</option>
+                    <option>2016</option>
+                "
+        */
+        var optionTag = "";
+        console.log(start);
+        console.log(end);
+        console.log(selected_value);
+        for(var i = start; i <= end; i++){
+            if(i == selected_value) optionTag += `<option selected>${i}</option>`;
+            else optionTag += `<option>${i}</option>`;
+        }
+        return optionTag;
+    }
+
+    if(location.hash != "") $(`a[href='${location.hash}']`).tab("show");
+    
+    
+    
+    $("#myTab a").on('click',function(){
+        $(this).tab("show");
+    });
+    
+    $("#home_attendance").click(function(){
+        var inputString = prompt('재택출근 사유를 입력해주세요.');
+        console.log(inputString=='')
+        console.log(inputString)
+        if(inputString != '' && inputString != null){
+            $("#commute_reason").val(inputString);
+            $("#home_attendance_form").submit();
+        }
+    });
+
+    
+</script>

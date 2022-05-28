@@ -1,9 +1,6 @@
 
 {% load extras %}
 {% load static %}
-
-
-
     <!--js-->
     
     <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -29,7 +26,6 @@
         }
     }
 </style>
-
 <div class="row mt-5">
     <div class="col-xl-3 col-md-6 mb-3">
         <div class="card border-left-primary shadow h-100 py-2">
@@ -37,42 +33,17 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-primary text-uppercase ml-3">오늘 나의 출퇴근</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800 ml-3">{{ request.session.user_name }}님</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800 ml-3">{{request.user.username}}님</div>
                     </div>
                     <div class="col mr-2">
                         <div class="row">
-                            <a href="/commute/commute/attendance/" class="btn btn-primary">출근</a>
+                            <a href="/commute/attendance/" class="btn btn-primary">출근</a>
                             &nbsp
-                            <a href="/commute/commute/offwork" class="btn btn-danger">퇴근</a>
+                            <a href="/commute/offwork" class="btn btn-danger">퇴근</a>
                             &nbsp
                             <a  id="home_attendance" class="btn btn-primary">재택출근</a>
                             &nbsp
-                            <a href="/commute/commute/home_offwork" class="btn btn-danger">재택퇴근</a>
-                            <!-- Button trigger modal -->
-                            <!-- 모달을 열기 위한 버튼 -->
-                            <!-- <button type="button" class="btn btn-primary btn-lg" id="openModalBtn">
-                                모달 보기 버튼
-                            </button>
-                            <! 모달 영역 -->
-                            <!-- <div id="modalBox" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                    <h4 class="modal-title" id="myModalLabel">모달 타이틀</h4>
-                                </div>
-                                <div class="modal-body">
-                                    내용
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary">확인</button>
-                                    <button type="button" class="btn btn-default" id="closeModalBtn">취소</button>
-                                </div>
-                                </div>
-                            </div>
-                            </div> -->
-
-
+                            <a href="/commute/home_offwork" class="btn btn-danger">재택퇴근</a>
                         </div>
                     </div>
                 </div>
@@ -85,14 +56,14 @@
 
 <!--tab 버튼-->
 <ul class="nav nav-tabs row" role="tablist" id="myTab">
-    <li role="presentation" class="active col-xs-6"><a href="#condition" aria-controls="condition" role="tab" data-toggle="tab">연구원출퇴근현황({{month}}월)</a></li>
-    <li role="presentation" class="col-xs-6"><a href="#history" aria-controls="history" role="tab" data-toggle="tab">연구원출퇴근기록</a></li>
+    <li role="presentation" class="active col-xs-6"><a href="#condition" aria-controls="condition" role="tab" data-toggle="tab">출퇴근현황({{month}}월)</a></li>
+    <li role="presentation" class="col-xs-6"><a href="#history" aria-controls="history" role="tab" data-toggle="tab">출퇴근기록</a></li>
     
 </ul>
 <!--tab content-->
 <div class="tab-content">
     
-    <!--연구원출퇴근현황-->
+    <!--출퇴근현황-->
     <div role="tabpanel" class="tab-pane active" id="condition">
         <!--연월로 출퇴근현황 조회 폼-->
         <form method="GET" class="mt-4 mb-4">
@@ -154,9 +125,9 @@
         </table>
 
     </div>
-    <!--end 연구원출퇴근현황-->
+    <!--end 출퇴근현황-->
 
-    <!--연구원출퇴근기록-->
+    <!--출퇴근기록-->
     <div role="tabpanel" class="tab-pane" id="history">
 
         <div class="card shadow mb-4">
@@ -179,8 +150,7 @@
                             <tr style="text-align: center;">
                                 <th>No</th>
                                 <th>이름</th>
-                                <th>전공</th>
-                                <th>구분</th>
+                                <th>부서</th>
                                 <th>출/퇴근시간</th>
                                 <th>비고</th>
                             </tr>
@@ -190,8 +160,7 @@
                             <tr>
                                 <td class="number" style="cursor:hand;">{{ forloop.counter  }}</td>
                                 <td style="cursor:hand;">{{ commute.user.user_name }}</td>
-                                <td style="cursor:hand;">{{ commute.user.user_major }}</td>
-                                <td style="cursor:hand;">{{ commute.get_commute_category_display }}</td>
+                                <td style="cursor:hand;">{{ commute.user.user_department }}</td>
                                 <td style="cursor:hand;">{{ commute.commute_date|date:'Y-m-d H:i:s' }}</td>
                                 <td style="cursor:hand;">{{ commute.commute_reason }}</td>
                             </tr>
@@ -203,7 +172,7 @@
             </div>
         </div>
     </div>
-    <!--end 연구원출퇴근기록-->
+    <!--end 출퇴근기록-->
 
     
     <form action="/commute/home_attendance/" method="post" id="home_attendance_form" style="display:none;">

@@ -5,9 +5,10 @@ from datetime import datetime,timedelta,date
 from .models import Commute
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 #로그인 해야 접근 가능
-# @login_required
+@login_required
 def commute_home(request):
     import calendar
 
@@ -43,7 +44,7 @@ def commute_home(request):
                 commute_status_list.append(None)
 
         user_commute_conditions.update({
-            user.user_name:{
+            user.username:{
                 'commute_status': commute_status_list, # 1일 ~ 31일까지 출퇴근 여부 초기값으로 None
                 'include_weekends_commute_rate': None, #주말포함 출근율
                 'include_weekends_number_absences': None, #주말포함 결근 일수
@@ -116,3 +117,63 @@ def commute_home(request):
 
     
     return render(request,'commute/commute_home.html',context)
+
+    #출근
+def attendance(request):
+    #로그인 체크
+    user_id = request.session.get('user_id')
+    if not user_id :
+        return redirect('/common/login')
+
+
+    today = datetime.now() 
+    user_obj   = User.objects.filter(user_number=user_id).first()
+    home_attendance_qs = Commute.objects.filter(commute_date__date=today.date(),user=user_obj,commute_category='3')
+    attendance_qs = Commute.objects.filter(commute_date__date=today.date(),user=user_obj,commute_category='1')
+    if home_attendance_qs or attendance_qs:
+        messages.info(request,'이미 출근등록 되었습니다.')
+    else:
+        Commute.objects.create(user=user_obj,commute_category='3',commute_date=today,commute_reason=request.POST.get('commute_reason'))
+
+    return redirect('/home/#history')
+
+#재택출근
+def home_attendance(request):
+    #로그인 체크
+    user_id = request.session.get('user_id')
+    
+    if not user_id :
+        return redirect('/common/login')
+
+    today = datetime.now() 
+    user_obj   = User.objects.filter(user_number=user_id).first()
+    home_attendance_qs = Commute.objects.filter(commute_date__date=today.date(),user=user_obj,commute_category='3')
+    attendance_qs = Commute.objects.filter(commute_date__date=today.date(),user=user_obj,commute_category='1')
+    if home_attendance_qs or attendance_qs:
+        messages.info(request,'이미 출근등록 되었습니다.')
+    else:
+        Commute.objects.create(user=user_obj,commute_category='3',commute_date=today,commute_reason=request.POST.get('commute_reason'))
+
+    return redirect('/home/#history')
+
+#퇴근
+def off_work(request):
+    user_id = request.session.get('user_id')
+    if not user_id :
+        return redirect('/common/login')
+    
+    today = datetime.now() 
+    user_obj   = User.objects.filter(user_number=user_id).first()
+    Commute.objects.create(user=user_obj,commute_category='2',commute_date=today)
+    
+    return redirect("/home/#history")
+
+
+#재택퇴근
+def home_off_work(request):
+    user_id = request.session.get('user_id')
+    today = datetime.now() 
+    user_obj   = User.objects.filter(user_number=user_id).first()
+    Commute.objects.create(user=user_obj,commute_category='4',commute_date=today)
+
+    return redirect("/home/#history")

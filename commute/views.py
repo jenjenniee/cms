@@ -9,6 +9,7 @@ from django.contrib import messages
 
 #로그인 해야 접근 가능
 @login_required
+
 def commute_home(request):
     import calendar
 

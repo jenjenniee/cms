@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'commute',
-    'common'
+    'common',
+    'cms',
 ]
 
 MIDDLEWARE = [
@@ -123,7 +124,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = ( os.path.join(BASE_DIR,'static'), )
 LOGIN_URL='/login/'
 # 로그인 성공후 이동하는 URL
-LOGIN_REDIRECT_URL = '/commute/home/'
+LOGIN_REDIRECT_URL = '/cms'
 
 # 로그아웃시 이동하는 URL
 LOGOUT_REDIRECT_URL = '/common/login'

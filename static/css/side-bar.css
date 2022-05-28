@@ -1,0 +1,49 @@
+.container-box{
+    width:1200px;
+    position: relative;
+    padding-top:30px;
+}
+
+
+.nav{
+    width:222px;
+    float: left;
+    border: 1px solid gray;
+}
+.content{
+    width:908px;
+    margin-left:292px;
+    
+  
+}
+.nav-header{
+    width:100%;
+    height:135px;
+    background: rgb(12,92,161);
+    text-align: center;
+    line-height: 135px;
+    font-size: 30px;
+    color:white;
+}
+.nav-list{
+  width:100%;
+  list-style: none;
+}  
+.nav-list li{
+  position: relative;
+  height: 30px;
+}
+.profile{
+  width:100%;
+  height:330px;
+  padding:10px;
+  border: 1px solid #dddddd;
+}    
+.profile-img{
+  float: left;
+}
+.profile-content{
+  padding-left:30px;
+  text-align: center;
+  
+}

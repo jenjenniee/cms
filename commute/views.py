@@ -116,38 +116,28 @@ def commute_home(request):
         'year': cur_datetime.year
     }
 
-    
     return render(request,'commute/commute_home.html',context)
-
+    
+#출근
 def attendance(request):
     #로그인 체크
-    user_id = request.session.get('user_id')
-    if not user_id :
-        return redirect('/common/login')
-
-
     today = datetime.now() 
-    user_obj   = User.objects.filter(user_id).first()
+    user_obj   = User.objects.filter(id=request.user.id).first()
 
     home_attendance_qs = Commute.objects.filter(commute_date__date=today.date(),user=user_obj,commute_category='3')
     attendance_qs = Commute.objects.filter(commute_date__date=today.date(),user=user_obj,commute_category='1')
     if home_attendance_qs or attendance_qs:
             messages.info(request,'이미 출근등록 되었습니다.')
     else:
-            Commute.objects.create(user=user_obj,commute_category='1',commute_date=today)
+            Commute.objects.create(user=request.user,commute_category='1',commute_date=today)
 
     return redirect("/commute/home/#history")
 
 #재택출근
 def home_attendance(request):
     #로그인 체크
-    user_id = request.session.get('user_id')
-    
-    if not user_id :
-        return redirect('/common/login')
-
     today = datetime.now() 
-    user_obj   = User.objects.filter(user_id).first()
+    user_obj   = User.objects.filter(id=request.user.id).first()
     home_attendance_qs = Commute.objects.filter(commute_date__date=today.date(),user=user_obj,commute_category='3')
     attendance_qs = Commute.objects.filter(commute_date__date=today.date(),user=user_obj,commute_category='1')
     if home_attendance_qs or attendance_qs:
@@ -159,12 +149,9 @@ def home_attendance(request):
 
 #퇴근
 def off_work(request):
-    user_id = request.session.get('user_id')
-    if not user_id :
-        return redirect('/common/login')
-    
+
     today = datetime.now() 
-    user_obj   = User.objects.filter(user_id).first()
+    user_obj   = User.objects.filter(id=request.user.id).first()
     Commute.objects.create(user=user_obj,commute_category='2',commute_date=today)
     
     return redirect("/commute/home/#history")
@@ -172,9 +159,8 @@ def off_work(request):
 
 #재택퇴근
 def home_off_work(request):
-    user_id = request.session.get('user_id')
     today = datetime.now() 
-    user_obj   = User.objects.filter(user_id).first()
+    user_obj   = User.objects.filter(id=request.user.id).first()
     Commute.objects.create(user=user_obj,commute_category='4',commute_date=today)
 
     return redirect("/commute/home/#history")

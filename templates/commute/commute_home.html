@@ -159,7 +159,7 @@
                             {% for commute in commutes %}
                             <tr>
                                 <td class="number" style="cursor:hand;">{{ forloop.counter  }}</td>
-                                <td style="cursor:hand;">{{ commute.user.user_name }}</td>
+                                <td style="cursor:hand;">{{ commute.user.username }}</td>
                                 <td style="cursor:hand;">{{ commute.user.user_department }}</td>
                                 <td style="cursor:hand;">{{ commute.commute_date|date:'Y-m-d H:i:s' }}</td>
                                 <td style="cursor:hand;">{{ commute.commute_reason }}</td>

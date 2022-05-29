@@ -1,31 +1,8 @@
 
 {% load extras %}
 {% load static %}
-    <!--js-->
-    
-    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
-    <script src="{% static 'js/demo/datatables-demo.js' %}"></script>
-    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-    <script src=" {% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
-    <script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
-    <link href="{% static 'vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
-    <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-    
+{% include 'base.html' %}
 
-    <!--css-->
-    <link rel="stylesheet" href="{% static 'document/css/main.css' %}">
-    <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-<style>
-    @media(max-width:500px){
-        .col-sm-12{
-            font-size:12px;
-        }
-    }
-</style>
 <div class="row mt-5">
     <div class="col-xl-3 col-md-6 mb-3">
         <div class="card border-left-primary shadow h-100 py-2">

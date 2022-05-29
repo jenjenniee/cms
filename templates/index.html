@@ -1,13 +1,19 @@
 {% load static %}
 {% include "base.html" %}
-    {% block style %}
-    {% endblock %}
+<link rel="stylesheet" href="../static/css/index.css">
+    
 <body>
-    <!-- 기본 템플릿 안에 삽입될 내용 Start -->
-    <h1>메인이야 메인이야 메인</h1>
-    <a href="/commute/home" onclick="location.href='commute_home.html'" class="btn btn-secondary">출근 페이지</a>
 
-    <!-- 기본 템플릿 안에 삽입될 내용 End -->
+    <div class="mem-profile">
+        <img width="150" height="200" src="../static/img/account.png">
+
+            <div style="color:#0f4e78; font-size: 23px;">{{user.username}}님</div>
+            <div style="color:#757575;">{{user.user_department}}</div>
+
+        <a href="/commute/home" onclick="location.href='commute_home.html'" class="btn btn-secondary">출근 페이지</a>
+    </div>
+
+
 </body>
 
 

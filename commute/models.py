@@ -1,6 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
+# from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
+
+# class User(AbstractBaseUser):
+#     user_department = models.CharField(max_length=20, null=True,blank=True, verbose_name="부서")
+#     user_profile = models.ImageField(blank=True, verbose_name="프로필 사진")
 
 class Commute(models.Model):
     COMMUTE_CATEGORY = (

@@ -23,4 +23,5 @@ urlpatterns = [
     path('cms/', include('cms.urls')),
     path('commute/', include('commute.urls')),
     path('common/', include('common.urls')),
+    path('board/', include('board.urls')),
 ]

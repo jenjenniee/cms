@@ -1,0 +1,127 @@
+{% load static %}
+{% include 'base.html' %}
+{% block depth %}
+<!-- <div class="depth">
+    <span>HOME</span>
+    <span>></span>
+    <span>BOARD</span>
+    <span>></span>
+    <span style="color: rgb(12,92,161);">자료실</span>
+</div> -->
+{% endblock %}
+{% block content %}
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'css/side-bar.css' %}" />
+
+
+<style>
+    @media(max-width:500px){
+        .nav{
+                float:none;
+                margin:0px;
+                height:fit-content;
+            }
+
+            .nav-header {
+                height:50%;
+            }
+
+            .nav-header p{  
+    
+                height:50px;
+                line-height:50px;
+            }
+     
+            .main-box{
+                width:90%
+            }
+            .content{
+                margin:0px;
+                margin-top:20px;
+                width:90%;
+                clear:both;
+            }
+
+            .container-box{
+                width:90%;
+                height:100%;
+            }
+    }
+
+</style>
+
+<div class="content">
+       
+<form action="{% url 'board:Editboard' eb.pk  %}" method="POST" id="formId" value="" enctype="multipart/form-data">
+    {% csrf_token %}
+
+        <p>제목:</p>
+        <input type='text' id='board_title' class="form-control" name='board_title' value="{{ eb.board_title }}"><br>
+        category:<br>
+                <select name="category" class="form-control">
+                    <option value="1">notice</option>
+                    <option value="2">board</option>
+                </select><br>
+        <p>첨부파일:</p>
+        {% if eb.board_file %}
+            <span style="color:gray;">Currently:</span>
+            <a href="/media/{{eb.board_file}}" download="download">{{eb.board_file}}</a>
+            <input type="checkbox" id="clear" name="clear">
+            <label for="clear">clear</label>
+            <br>
+        {% endif %}
+        <span style="color:gray;">Change:</span>
+        <input type="file" style="display: inline;" name="file">
+        <br>
+
+        <p>내용:</p>
+        <!-- <input type='text' id='board_content' name='board_content'  value="{{ eb.board_content }}"> -->
+        <div id="summernote">{{ eb.board_content|safe}}</div>
+        <input type="hidden" id="final_Board_content" name="board_content">
+        <input type="button" value="수정" onclick="submit_click();">
+</form>
+</div>
+<script>
+    function submit_click() {
+        boardcontent();
+        alert("수정되었습니다.");
+
+    }
+ //썸머노트
+$(document).ready(function() {
+  $('#summernote').summernote();
+});
+
+$('#summernote').summernote({
+  height: 300,
+  minHeight: null,
+  maxHeight: null,
+  focus: true
+});
+
+function boardcontent(){
+    var markupStr = $('#summernote').summernote('code');
+    $("#final_Board_content").val(markupStr);
+    $("#formId").submit();
+  }
+
+// 글올리기
+function oncheckfile(){
+        $("#board_submit").css('display','none');
+        $("#upload_comment").css('display','block');
+    }
+
+ </script>
+ <!-- <script>
+
+        $(".container-box").height($(window).height()-320);
+        $(window).resize(function() {
+            $(".container-box").height($(window).height()-320);
+         });
+    </script> -->
+
+{% endblock %}

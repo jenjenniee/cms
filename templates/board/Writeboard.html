@@ -1,0 +1,116 @@
+{% load static %}
+{% include 'base.html' %}
+{% block depth %}
+<!-- <div class="depth">
+        <span>HOME</span>
+        <span>></span>
+        <span>BOARD</span>
+        <span>></span>
+        <span style="color: rgb(12,92,161);">자료실</span>
+    </div> -->
+{% endblock %}
+{% block content %}
+<!-- 썸머노트 -->
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
+<!--외부 css 파일-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/side-bar.css' %}" />
+
+    <style>
+        ul li{
+            list-style: none;
+        }
+     
+        @media(max-width:500px){
+            .nav{
+                float:none;
+                margin:auto;
+                height:fit-content;
+            }
+
+            .nav-header {
+                height:50%;
+            }
+
+            .nav-header p{
+                height:50px;
+                line-height:50px;
+            }
+            .content{
+                margin:auto;
+                margin-top:20px;
+                width:100%
+            }
+
+            .main-box{
+                padding-top:30px;
+            }
+
+            .container-box{
+            width:100%;
+            height:100%;
+            }
+        }
+     
+     </style>
+
+
+
+        <div class="content">
+            {% block board %}
+            <form action="{% url 'board:Writeboard' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                제목:<br> {{ form.board_title }}<br>
+
+                {{ form.board_file }}
+                    <div id="summernote"></div>
+                    <input type="hidden" id=final_Board_content name="board_content">
+                    <button id=board_submit name=board_submit class="btn btn-default pull-right" onclick="oncheckfile();">작성하기</button>
+
+                {% endblock %}
+
+                    <p id=upload_comment name=upload_comment style="display:none;">업로드 중 ....<p>
+            </form>
+        </div>
+            <hr><br>
+<script>
+//썸머노트
+$(document).ready(function() {
+  $('#summernote').summernote();
+});
+
+$('#summernote').summernote({
+  height: 300,
+  minHeight: null,
+  maxHeight: null,
+  focus: true,
+  placeholder:"내용을 입력하세요."
+});
+
+function boardcontent(){
+    var markupStr = $('#summernote').summernote('code');
+    console.log(markupStr);
+    $("#final_Board_content").val(markupStr);
+    document.board_view.submit();
+  }
+
+// 글올리기
+function oncheckfile(){
+
+    boardcontent();
+     $("#board_submit").css('display','none');
+    $("#upload_comment").css('display','block');
+    }
+
+</script>
+<script>
+
+        $(".container-box").height($(window).height()-320);
+        $(window).resize(function() {
+            $(".container-box").height($(window).height()-320);
+         });
+    </script>
+{% endblock %}

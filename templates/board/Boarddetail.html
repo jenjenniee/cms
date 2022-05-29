@@ -1,0 +1,179 @@
+{% load static %}
+{% include 'base.html' %}
+{% load static %}
+{% block depth %}
+    <!-- <div class="depth">
+        <span>HOME</span>
+        <span>></span>
+        <span>BOARD</span>
+        <span>></span>
+        <span style="color: rgb(12,92,161);">자료실</span>
+    </div> -->
+{% endblock %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/side-bar.css' %}" />
+
+<style>
+    .content span{
+        display: inline-block;
+        margin-left:30px;
+    }
+    #b-info .info-val{
+        color:#b2b2a2;
+    }
+
+    #list-btn{
+        display: inline-block;
+        width:111px;
+        height: 36px;
+        border: 1px solid #bfbfbf;
+        font-size: 20px;
+        text-align: center;
+        line-height: 36px;
+        color:black;
+        font-weight: 10px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+    #d-btn a{
+        display: inline-block;
+        margin-right:19px;
+        color:#bfbfbf;
+    }
+
+    h3{
+        margin-left:30px;
+    }
+
+    @media(max-width:500px){
+        .nav{
+            float:none;
+            margin:auto;
+            margin-top:20px;
+            height:fit-content;
+        }
+
+        .nav-header {
+            height:50%;
+        }
+
+        .nav-header p{
+            height:50px;
+            line-height:50px;
+        }
+     
+        .main-box{
+             width:90%
+        }
+        .content{
+             margin:0px;
+             width:90%;
+        }
+
+        h3{
+        margin-left:0px;
+        font-size:15px;
+        }
+
+        #b-info{
+            font-size: 13px;
+        }
+
+        .info-val{
+            margin-right:100px;
+            font-size: 10px;
+        }
+
+        .content{
+            margin:auto;
+        }
+    }
+</style>
+    <div class="content">
+        <hr style="border:2px solid #555555;">
+        <!--title-->
+        <h3>{{de.board_title}}</h3>
+        <hr style="border-color:#bfbfbf;">
+        <div id="b-info">
+            <span><b>글쓴이</b></span>
+            <span class="info-val">{{de.user}}</span>
+            <span><b>작성일</b></span>
+            <span class="info-val" style="margin-right:40px;">{{de.board_date}}</span>
+            <span><b>조회수</b></span>
+            <span class="info-val">{{de.board_hits}}</span>
+        </div>
+        <hr style="border-color:#bfbfbf;">
+        <div style="margin-left:30px;">
+            <p>첨부파일</p>
+            {% if de.board_file %}
+                <a href="/media/{{de.board_file}}" download="download">{{de.board_file}}</a>
+            {% else %}
+                <p style="color:#bfbfbf;">첨부파일이 없습니다.</p>
+            {% endif %}
+        </div>
+        <hr style="border-color:#bfbfbf;">
+        <p style="margin-left:30px;">
+            {{de.board_content|safe}}
+        </p>
+        <hr style="border-color:#bfbfbf;">
+        <div class="text-right">
+            <div id="d-btn">
+
+
+                {% if request.session.user_name == de.user.user_name%}
+
+                    <a style="cursor: pointer; color:gray;" onclick="modify_and_delete('mod');">수정</a>
+                    <a style="cursor: pointer; color:gray;" onclick="modify_and_delete('del');">삭제</a>
+                {% endif %}
+
+            </div>
+
+            <a id="list-btn" href="{% url 'board:Viewboard' %}">목록</a>
+        </div>
+        <hr style="border:2px solid #555555;">
+        <div id="prev-text">
+            <span>
+                <b>이전글</b>
+            </span>
+            <span class="info-val">|</span>
+            <span>
+                {% if prev_board %}
+                    <a href="{% url 'board:Boarddetail' prev_board.pk %}">{{prev_board.board_title}}</a>
+                {% else %}
+                    이전글이 없습니다
+                {% endif %}
+            </span>
+        </div>
+        <hr style="border-color:#bfbfbf;">
+        <div id="next-text">
+            <span><b>다음글</b></span>
+            <span class="info-val">|</span>
+            <span>
+                {% if next_board %}
+                   <a href="{% url 'board:Boarddetail' next_board.pk %}">{{next_board.board_title}}</a>
+
+                {% else %}
+                    다음글이 없습니다
+                {% endif %}
+            </span>
+        </div>
+        <hr style="border-color:#bfbfbf;">
+    </div>
+    <script>
+        function modify_and_delete(type,pk){
+            //수정
+            if(type == "mod"){
+                window.location.href="{% url 'board:Editboard' de.pk %}";
+            }
+            //삭제
+            else if(type == "del"){
+                if(confirm("삭제하시겠습니까?")){
+                    window.location.href="{% url 'board:Deleteboard' de.pk %}";
+                }
+
+
+            }
+        }
+
+    </script>
+{% endblock %}

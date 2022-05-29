@@ -1,0 +1,99 @@
+{% load static %}
+{% include 'base.html' %}
+{% block depth %}
+<!-- <div class="depth">
+    <span>HOME</span>
+    <span>></span>
+    <span>BOARD</span>
+    <span>></span>
+    <span style="color: rgb(12,92,161);">자료실</span>
+</div> -->
+{% endblock %}
+{% block content %}
+
+    <!--외부 css 파일-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/side-bar.css' %}" />
+    <style>
+        @media(max-width:500px){
+            .nav{
+            float:none;
+            margin:auto;
+            height:fit-content;
+        }
+
+            .nav-header {
+                height:50%;
+            }
+
+            .nav-header p{
+                height:50px;
+                line-height:50px;
+            }
+
+            .main-box{
+                width:90%;
+            }
+            .content{
+                margin:auto;
+                width:100%
+            }
+
+            .content h1{
+            font-size:25px;
+            font-weight:bold;
+            }
+
+            .container-box{
+            width:100%;
+            height:100%;
+            }
+
+            .table{
+                font-size:12px;
+            }
+        }
+    </style>
+
+<div class="container-box">
+
+        <div class="content">
+            <h1>자료실</h1>
+            {% block board %}
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th>순번</th>
+                        <th>제목</th>
+                        <th>작성자</th>
+                        <th>작성일</th>
+                        <th>조회수</th>
+                    </tr>
+                </thead>
+                {% for vb in vb %}
+                <tbody>
+                    <tr>
+                        <td>{{ forloop.revcounter }}</td>
+                        <td><a href="{% url 'board:Boarddetail' vb.pk %}">{{ vb.board_title }}</a></td>
+                        <td>{{ vb.user }}</td>
+                        <td>{{ vb.board_date|date:"Y/m/d" }}</td>
+                        <td>{{ vb.board_hits }}</td>
+                    </tr>
+                </tbody>
+
+            {% endfor %}
+
+            {% endblock %}
+        </table>
+            <a href="/board/Writeboard" onclick="location.href='Writeboard.html'" class="btn btn-default pull-right">글쓰기</a>
+        </div>
+    </div>
+    <hr>
+    <script>
+
+        $(".container-box").height($(window).height()-320);
+        $(window).resize(function() {
+            $(".container-box").height($(window).height()-320);
+         });
+    </script>
+</div>
+{% endblock %}

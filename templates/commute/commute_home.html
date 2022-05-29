@@ -9,18 +9,20 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase ml-3">오늘 나의 출퇴근</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800 ml-3">{{request.user.username}}님</div>
+                        <div class="text-s font-weight-bold text-primary text ml-4">My commute today</div>
+                        <div class="h4 mb-2 font-weight-bold text-gray-800 ml-3">{{request.user.username}}님</div>
                     </div>
                     <div class="col mr-2">
                         <div class="row">
-                            <a href="/commute/attendance/" class="btn btn-primary">출근</a>
+                            <a href="/commute/attendance/" class="btn btn-outline-primary">출근</a>
                             &nbsp
-                            <a href="/commute/offwork" class="btn btn-danger">퇴근</a>
+                            <a href="/commute/offwork" class="btn btn-outline-danger">퇴근</a>
                             &nbsp
-                            <a  id="home_attendance" class="btn btn-primary">재택출근</a>
+                            <div class="row">
+                            <a  id="home_attendance" class="btn btn-outline-primary">재택출근</a>
                             &nbsp
-                            <a href="/commute/home_offwork" class="btn btn-danger">재택퇴근</a>
+                            <a href="/commute/home_offwork" class="btn btn-outline-danger">재택퇴근</a>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -28,7 +30,6 @@
         </div>
     </div>
 </div> 
-
 
 
 <!--tab 버튼-->
@@ -44,9 +45,9 @@
     <div role="tabpanel" class="tab-pane active" id="condition">
         <!--연월로 출퇴근현황 조회 폼-->
         <form method="GET" class="mt-4 mb-4">
-            <select class="form-control col-md-1" name="year" id="year-selectbox"></select>
-            <select class="form-control col-md-1" name="month" id="month-selectbox"></select>
-            <input type="submit" class="btn btn-info" value="조회"/>
+            <select class="form-control col-md-2" name="year" id="year-selectbox"></select>
+            <select class="form-control col-md-2" name="month" id="month-selectbox"></select>
+            <input type="submit" class="btn btn-secondary" value="조회"/>
         </form>
         <table class="table table-bordered">
             <tr>
@@ -114,7 +115,7 @@
                         <input class="form-control col-md-2" value="{{start}}" type="date" name="start">
                         &nbsp;~&nbsp;
                         <input class="form-control col-md-2" value="{{end}}" type="date" name="end">&nbsp;
-                        <input type="submit" class="btn btn-info" value="조회">
+                        <input type="submit" class="btn btn-secondary" value="조회">
                     </div>
                 </form>
             </div>

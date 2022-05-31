@@ -19,6 +19,9 @@
                             <h4><a href="{% url 'board:Viewboard' %}">자료실</a></h4>
                         </div>
                         <div class="header-item header-text">
+                            <h4><a href="{% url 'qna:index' %}">Q&A</a></h4>
+                        </div>
+                        <div class="header-item header-text">
                             <h4><a href="{% url 'common:logout' %}">{{ user.username }} (로그아웃)</a></h4>
                         </div>
                     {% else %}

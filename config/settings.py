@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'common',
     'cms',
     'board',
+    'qna',
 ]
 
 MIDDLEWARE = [

@@ -1,19 +1,106 @@
-{% load static %}
+{% load static %} 
 {% include "base.html" %}
 <link rel="stylesheet" href="../static/css/index.css">
-    
+<style>
+    /* body 스타일 */
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+      font-size: 14px;
+    }
+    #calendar {
+      max-width: 1100px;
+      margin: 40px auto;
+      margin-top: -300px;
+    }
+  </style>
 <body>
 
     <div class="mem-profile">
-        <img width="150" height="200" src="../static/img/hi.png">
-
-            <div style="color:#0f4e78; font-size: 23px;">{{user.username}}님</div>
-            <div style="color:#757575;">{{user.user_department}}</div>
+        <h1></h1>
+        <img width="200" height="200" src="{{ request.user.profile.photo.url }}" >
+        <!-- <img src="../static/img/ljg.png"> -->
+            <div style="color:#0f4e78; font-size: 23px;">{{request.user.username}}님</div>
+            <div style="color:#757575;">{{request.user.profile.user_department}}</div>
 
         <a href="/commute/home" onclick="location.href='commute_home.html'" class="btn btn-secondary">출근 페이지</a>
     </div>
 
+    <div id='calendar-container'>
+        <div id='calendar'></div>
+    </div>
 
+
+    <script>
+        (function(){
+          $(function(){
+
+            const result  = loadData({
+                url: "/api/plan/",
+                data: {},
+                method: 'GET' //기능 바꾸기
+            })
+            // calendar element 취득
+            var calendarEl = $('#calendar')[0];
+            // full-calendar 생성
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+              height: '800px', // calendar 높이 설정
+              expandRows: true, // 화면에 맞게 높이 재설정
+              slotMinTime: '08:00', // Day 캘린더에서 시작 시간
+              slotMaxTime: '20:00', // Day 캘린더에서 종료 시간
+              // 해더에 표시할 툴바
+              headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+              },
+              initialView: 'dayGridMonth', // 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)
+              initialDate: new Date().toISOString(), // 초기 날짜 설정 
+              navLinks: true, 
+              editable: true, 
+              selectable: true, 
+              nowIndicator: true,
+              dayMaxEvents: true,
+              locale: 'ko', 
+            
+              select: function(arg) { // 캘린더에서 드래그로 이벤트를 생성
+                var title = prompt('Event Title:');
+                if (title) {
+
+                  
+                console.log(arg.start.getFullYear())
+                  const resultPost  = loadData({
+                        url: "/api/plan/",
+                        data: {
+                            title: title,
+                            date: `${arg.start.getFullYear()}-${arg.start.getMonth()+1}-${arg.start.getDate()}`
+                        },
+                        header: {"X-CSRFToken": "{{ csrf_token }}"},
+                        method: 'POST'
+                    })
+
+                  if(resultPost.is_success){
+                        calendar.addEvent({
+                        title: title,
+                        start: arg.start,
+                        end: arg.end,
+                        allDay: arg.allDay
+                    })
+                  }  
+
+
+                }
+                calendar.unselect()
+              },
+              // 이벤트 
+              events:result
+            });
+            // 캘린더 랜더링
+            calendar.render();
+          });
+        })();
+      </script>
 </body>
 
 

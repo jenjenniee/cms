@@ -18,14 +18,10 @@
             <div class="d-flex justify-content-end">
                 {% if question.modify_date %}
                 <div class="badge bg-light text-dark p-2 text-start mx-3">
-                    <div class="mb-2">modified at</div>
+                    <div class="mb-2">{{ question.author.username }}</div>
                     <div>{{ question.modify_date }}</div>
                 </div>
                 {% endif %}
-                <div class="badge bg-light text-dark p-2 text-start">
-                    <div class="mb-2">{{ question.author.username }}</div>
-                    <div> {{ question.create_date }}</div>
-                </div>
             </div>
             <div class="my-3">
                 {% if request.user == question.author %}
@@ -46,7 +42,7 @@
             <div class="d-flex justify-content-end">
                 {% if answer.modify_date %}
             <div class="badge bg-light text-dark p-2 text-start mx-3">
-                <div class="mb-2">modified at</div>
+                <div class="mb-2">{{ answer.author.username }}</div>
                 <div>{{ answer.modify_date }}</div>
             </div>
             {% endif %}

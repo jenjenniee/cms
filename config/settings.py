@@ -28,7 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-# Application definition
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -42,7 +42,10 @@ INSTALLED_APPS = [
     'cms',
     'board',
     'qna',
+    'rest_framework',
+    'api'
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -109,25 +112,30 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+#LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = ( os.path.join(BASE_DIR,'static'), )
-LOGIN_URL='/login/'
+
+
+LOGIN_URL='/common/login'
 # 로그인 성공후 이동하는 URL
 LOGIN_REDIRECT_URL = '/cms'
-
 # 로그아웃시 이동하는 URL
 LOGOUT_REDIRECT_URL = '/common/login'
+
+MEDIA_URL = '/media/'		# ex) /media/photo1.png
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+

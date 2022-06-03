@@ -1,12 +1,7 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.contrib import auth
-
-
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
-from common.forms import UserForm
 from django.contrib.auth.models import User
+from .models import Profile
 
 
 # def login(request):
@@ -22,6 +17,8 @@ from django.contrib.auth.models import User
 #     else:
 #         form = UserForm()
 #     return render(request, 'common/.html', {'form': form})
+def Post(request):
+  Profile.photo = request.FILES['photo']
 
 #로그인
 def login(request):

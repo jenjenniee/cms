@@ -3,6 +3,17 @@
 {% load static %}
 {% include 'base.html' %}
 
+<style>
+    .cover{
+        overflow: scroll;
+    }
+    @media(max-width:500px){
+        .col-sm-12{
+            font-size:12px;
+        }
+    }
+</style>
+<div class="cover">
 <div class="row mt-5">
     <div class="col-xl-3 col-md-6 mb-3">
         <div class="card border-left-primary shadow h-100 py-2">
@@ -30,8 +41,6 @@
         </div>
     </div>
 </div> 
-
-
 <!--tab 버튼-->
 <ul class="nav nav-tabs row" role="tablist" id="myTab">
     <li role="presentation" class="active col-xs-6"><a href="#condition" aria-controls="condition" role="tab" data-toggle="tab">출퇴근현황({{month}}월)</a></li>
@@ -49,7 +58,7 @@
             <select class="form-control col-md-2" name="month" id="month-selectbox"></select>
             <input type="submit" class="btn btn-secondary" value="조회"/>
         </form>
-        <table class="table table-bordered">
+        <table class="table table-bordered" >
             <tr>
                 <td></td>
                 {% for username in user_commute_conditions %}
@@ -153,7 +162,7 @@
         </div>
     </div>
     <!--end 출퇴근기록-->
-
+</div>
     
     <form action="/commute/home_attendance/" method="post" id="home_attendance_form" style="display:none;">
         {% csrf_token %}

@@ -17,7 +17,7 @@ def Writeboard(request):
 
         if form.is_valid():
             Board = form.save(commit=False)
-            Board.user = User.objects.get(user_number=user_id)
+            Board.user = request.user
             Board.board_title = request.POST['board_title']
             Board.board_content = request.POST['board_content']
             Board.board_date = datetime.now()

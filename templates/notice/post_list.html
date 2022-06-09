@@ -1,0 +1,61 @@
+{% extends 'notice/base.html' %}
+{% block main_area %}
+{% if user.is_authenticated %}
+{% if user.is_superiser or user.is_staff %}
+
+{% endif %}
+{% endif %}
+<div class="container my-3">
+    <table class="table">
+        <thead>
+            <tr class="table-dark">
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>카테고리</th>
+                <th>작성일시</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if post_list %}
+            {% for notice in post_list %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>
+                    <a href="{% url 'notice:detail' notice.id %}">{{ notice.title }}</a>
+                </td>
+                <td>{{ notice.author }}</td>
+                {% if notice.category %}
+                <td>{{ notice.category }}</td>
+                {% else %}
+                <td>미분류</td>
+                {% endif %}
+                <td>{{ notice.created_at }}</td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="3">질문이 없습니다.</td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+<div style="padding-right: 100px;">
+    <a class="btn btn-secondary btn-sm float-right" href="/notice/create_post/" role="button">
+        <i class="fas fa-pen"></i>&nbsp;&nbsp;New Post
+    </a>
+</div>
+
+<!-- Pagination-->
+<div style="text-align:center">
+    <ul class="pagination justify-content-center my-4">
+        <li class="page-item ">
+            <a class="page-link" href="#">&larr;Newer</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="#!">Older&rarr;</a>
+        </li>
+    </ul>
+</div>
+{% endblock %}

@@ -27,4 +27,10 @@ urlpatterns = [
          answer_views.answer_modify, name='answer_modify'),
     path('answer/delete/<int:answer_id>/',
          answer_views.answer_delete, name='answer_delete'),
+
+     #comment
+     # path('delete_comment/int:question_id>/',
+     #      comment_views.delete_comment, name='delete_comment'),
+     # path('new_comment/int:question_id>/',
+     #      comment_views.new_comment, name='new_comment')                  
 ]

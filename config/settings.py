@@ -44,7 +44,11 @@ INSTALLED_APPS = [
     'board',
     'qna',
     'rest_framework',
-    'api'
+    'api',
+    'document',
+    #'blog',
+    'crispy_forms',
+    'notice'
 ]
 
 

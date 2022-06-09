@@ -1,0 +1,105 @@
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="col-sm-12">
+            <div class='font-weight-bold'>수신자 선택</div>
+            <form action="" method="POST">
+                <div>
+                    <span>검색:</span>
+                    <span><input type="text" class='form'></span>
+                    <span><input type="button" value="검색"></span>
+                </div>
+
+            </form>
+
+            <table class="table table-bordered table-sm table-hover mt-2">
+                <thead class="thead-light text-center">
+                    <th>이름</th>
+                    <th>메뉴</th>
+                </thead>
+                <tbody id='tbody'>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{user.username}}</td>
+                        <td class='text-center'><input type="button"
+                                onclick="selectedUser('{{user.username}}');" value="선택"></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#chb').on('click', function () {
+                if ($('#chb').prop('checked')) checkboxEvent(1);
+                else checkboxEvent(0);
+            })
+        });
+
+        var cnt_content = "";
+
+
+        function selectedUser(name, wnum) {
+            var info = {
+                'name': name,
+                'wnum': wnum
+            };
+            var info = JSON.stringify(info);
+            opener.setUserInfo(info);
+            window.close();
+        }
+
+
+        // type 0 기본 (전체 사원)
+        // type 1 부서 (내 부서 사원)
+        {% comment %}
+        function checkboxEvent(num) {
+            if (num == 1) {
+                $.ajax({
+                    type: 'POST',
+                    url: "{% url 'login:user_list_DR' %}",
+                    data: {
+                        'csrfmiddlewaretoken': '{{ csrf_token }}',
+                        'wnum': '{{request.session.wnum}}',
+                        'type': '1'
+                    },
+                    success: function (res) {
+                        makeTable(res.user_list[0], res.user_list[1], res.user_list[2]);
+                    },
+                    error: function (a, b, c) {
+                        alert('관리자에게 문의하세요.');
+                    }
+                });
+            }
+            else if (num == 0) {
+                $.ajax({
+                    type: 'POST',
+                    url: "{% url 'login:user_list_DR' %}",
+                    data: {
+                        'csrfmiddlewaretoken': '{{ csrf_token }}',
+                        'wnum': '{{request.session.wnum}}',
+                        'type': '0'
+                    },
+                    success: function (res) {
+                        makeTable(res.user_list[0], res.user_list[1], res.user_list[2]);
+                    },
+                    error: function (a, b, c) {
+                        alert('관리자에게 문의하세요.');
+                    }
+                });
+            }
+        } {% endcomment %}
+    </script>
+</body>
+
+</html>

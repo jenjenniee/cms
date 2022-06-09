@@ -1,0 +1,206 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+<script src={% static 'document/js/jy-write.js' %}></script>
+<link rel="stylesheet" href="{% static 'document/css/main.css' %}">
+<style>
+    @media(min-width:500px) {
+        #footer p {
+            margin-top: 20px;
+        }
+    }
+
+    @media(max-width:500px) {
+        .report-footer-func .addressee-func {
+            height: auto;
+            width: 100%;
+            display: block;
+            float: flex;
+            text-align: center;
+        }
+
+        #footer p {
+            margin-top: 20px;
+        }
+
+
+    }
+</style>
+{% endblock %}
+{% block content %}
+<div class="" style="text-align: -webkit-center;">
+    <div class="report table-resizing" style="text-align: left">
+        <p class="page-title">{{report.dr_title}}</p>
+        <form action="/document/daily/write" method="POST">
+            {% csrf_token %}
+
+            <div class="col-sm-12">
+                <table class="table table-bordered table-content-header" style="text-align : center;">
+                    <tr>
+                        <td class="table-light " style="vertical-align:middle; text-align : center; font-weight : bold;"
+                            rowspan="2">결재</td>
+                        <td class="table-light " style="font-weight : bold; vertical-align:middle;">기안자</td>
+                        <td class="table-light " style="font-weight : bold;">승인자</td>
+                        <td class="table-light " style="font-weight : bold;">승인일자</td>
+                        <td class="table-light " style="font-weight : bold;">상태</td>
+                    </tr>
+                    <tr>
+                        <td>{{report.dr_drafter}}</td>
+                        <td>{{report.dr_addressee}}</td>
+                        <td>{{report.dr_checked_at|default_if_none:""}}</td>
+                        <td>{{report.get_dr_status_display}}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div>
+                <div class="content-header ">
+                    <p>작성자</p>
+                </div>
+                <div class="col-sm-12">
+                    <div>
+                        <table class="table table-bordered table-writer-info">
+                            <tr>
+                                <td class="table-light ">이름</td>
+                                <td>{{report.dr_drafter}}</td>
+                                <td class="table-light ">작성일자</td>
+                                <td>{{report.dr_created_at}}</td>
+                            </tr>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-header">
+                <p>금일 업무 내용</p>
+            </div>
+
+            <div class='col-sm-12'>
+
+                <div>
+
+                    <table class="table table-bordered table-content">
+                        <thead>
+                            <tr>
+                                <td class="table-light ">NO.</td>
+                                <td class="table-light ">오늘 수행한 업무의 세부 내용</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if report.dailycontent_set.all %}
+                            {% for i in report.dailycontent_set.all %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{i.dc_content}}</td>
+                            </tr>
+                            {% endfor %}
+                            {% else %}
+                            <td colspan="2">금일 업무 내용이 없습니다.</td>
+                            {% endif %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+            <div class="content-header">
+                <p>명일 업무 계획</p>
+            </div>
+
+            <div class='col-sm-12'>
+                <div>
+                </div>
+                <div>
+
+                    <table class="table table-bordered table-content">
+                        <thead>
+                            <tr>
+                                <td class="table-light">NO.</td>
+                                <td class="table-light">내일 수행할 업무의 세부 내용</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if report.tommrowwill_set.all %}
+                            {% for i in report.tommrowwill_set.all %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{i.tw_content}}</td>
+                            </tr>
+                            {% endfor %}
+                            {% else %}
+                            <td colspan="2">명일 업무 계획이 없습니다.</td>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="content-header">
+                <p>건의사항</p>
+            </div>
+            <div class='col-sm-12'>
+                <div>
+                    <table class="table table-bordered table-content">
+                        <thead>
+                            <tr>
+                                <td class="table-light ">NO.</td>
+                                <td class="table-light ">건의, 현황, 문제점, 기타사항 등</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if report.suggestion_set.all %}
+                            {% for i in report.suggestion_set.all %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{i.s_content}}</td>
+                            </tr>
+                            {% endfor %}
+                            {% else %}
+                            <td colspan="2">문제점 및 건의사항이 없습니다.</td>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </form>
+        <div class="report-footer-func">
+            {% if report.dr_addressee == user %}
+            <p class="s-title">피드백 작성</p>
+            <span>
+                <textarea id="textarea-feedback"
+                    placeholder="피드백 의견을 작성해 주세요.">{{report.dr_feedback|default_if_none:""}}</textarea>
+            </span>
+            <span class="addressee-func" style="margin-right: 50px;">
+                <div class="addressee-option">
+                    <label class="feedback-btn">
+                        <input type="radio" name="dr_status" value="2" checked> 승인
+                    </label>
+                    <label class="feedback-btn">
+                        <input type="radio" name="dr_status" value="3"> 반려
+                    </label>
+                </div>
+                <div>
+                    <input id="submit-feedback-btn" type="button" data-pk={{report.pk}} data-csrf={{csrf_token}}
+                        value="결재 완료">
+                </div>
+            </span>
+            {% endif %}
+
+            {% if report.dr_drafter == user %}
+            <p class="s-title">피드백</p>
+            <div>
+                <div class="feedback-section">
+                    {{report.dr_feedback|default_if_none:""}}
+                    {% if report.dr_status == '1' %}
+                    <div class="report-fading">
+                        아직 결재되지 않은 보고서입니다. <br />
+                        결재가 된 이후에 해당 영역이 활성화됩니다.
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

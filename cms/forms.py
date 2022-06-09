@@ -8,7 +8,7 @@ class DateInput(DateInput):
 class EventForm(ModelForm):
     class Meta:
         model = Event
-        fields = '__all__'
+        fields = '__all__' 
         widgets = {
             'start': DateInput(),
             'end': DateInput(),            

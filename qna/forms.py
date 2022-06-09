@@ -1,6 +1,7 @@
+
 from django import forms
 from qna.models import Question, Answer
-
+from django import forms
 
 class QuestionForm(forms.ModelForm):
     class Meta:
@@ -19,3 +20,9 @@ class AnswerForm(forms.ModelForm):
         labels = {
         'content': '답변내용',
     }
+
+#추가
+# class CommentForm(forms.ModelForm):
+#     class Meta:
+#         model = Comment
+#         fields = ('content',)

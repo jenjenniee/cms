@@ -19,12 +19,6 @@
 
 
 <style>
-    .depth{
-        background-color: rgb(255, 255, 255); 
-        padding-right: 20px;
-        font-size: 30px;
-    }
-
     @media(max-width:500px){
         .nav{
                 float:none;
@@ -64,11 +58,7 @@
        
 <form action="{% url 'board:Editboard' eb.pk  %}" method="POST" id="formId" value="" enctype="multipart/form-data">
     {% csrf_token %}
-    <div class="depth">
-        <span>HOME</span>
-        <span>&gt;</span>
-        <span style="color: rgb(12,92,161);">자료실</span>
-        </div>
+
         <p>제목:</p>
         <input type='text' id='board_title' class="form-control" name='board_title' value="{{ eb.board_title }}"><br>
         category:<br>

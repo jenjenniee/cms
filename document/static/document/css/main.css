@@ -1,0 +1,237 @@
+p.s-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: 5px;
+    color: #5b5b5b;
+    line-height: 1em;
+    display: block;
+}
+
+.table-resizing {
+    width: 70% !important;
+}
+
+.font-custom {
+    font-size: 14px;
+}
+
+.table-light {
+    font-weight: bold;
+    background-color: #eaeaea;
+}
+
+.report {
+    padding: 10px;
+    margin-top: 30px;
+    border: 2px solid #eaeaea;
+    min-height: 800px;
+}
+
+.report .table-content-header {
+    width: 400px;
+}
+
+.report .page-title {
+    font-weight: bold;
+    font-size: 25px;
+    margin-bottom: 20px;
+    margin-left: 40px;
+}
+
+.report #choice-addressee-btn {
+    padding: 5px;
+    background-color: transparent;
+    border-color: #858796;
+    color: #858796;
+    margin-left: 10px;
+}
+
+.report #choice-addressee-btn:hover {
+    background-color: #858796;
+    color: white;
+}
+
+.report .content-header {
+    padding: 5px;
+}
+
+.report .content-header p {
+    color: #858796;
+    margin-left: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    display: inline;
+}
+
+.report .control-images {
+    border: 1px solid black;
+    padding: 2px;
+    margin-bottom: 6px;
+    cursor: pointer;
+}
+
+.report .control-images:hover {
+    border: 1px solid #858796;
+    cursor: pointer;
+}
+
+.report .table-content tr td:nth-child(odd) {
+    width: 3%;
+    vertical-align: middle;
+    text-align: center;
+    font-weight: bold;
+}
+
+.report .table-content thead tr td:nth-child(even) {
+    vertical-align: middle;
+    font-weight: bold;
+}
+
+.report .table-writer-info td:nth-child(1) {
+    width: 5%;
+    text-align: center;
+    font-weight: bold;
+}
+
+.report .table-writer-info td:nth-child(3) {
+    width: 8%;
+    text-align: center;
+    font-weight: bold;
+}
+
+.document-content .table-reports td:not(.exclude-cell) {
+    text-align: center;
+}
+
+.document-content .table-reports thead th {
+    text-align: center;
+}
+
+.document-content .table-reports a {
+    cursor: pointer;
+}
+
+.report-footer-func #textarea-feedback {
+    border: 2px solid #eaeaea;
+    width: 80%;
+    height: 170px;
+    padding: 8px;
+    font-size: 14px;
+    margin-left: 15px;
+    font-weight: bold;
+    color: #5b5b5b;
+}
+
+.report-footer-func .addressee-func {
+    height: 170px;
+    width: 10%;
+    display: block;
+    float: right;
+    text-align: center;
+}
+
+.report-footer-func .addressee-func div {
+    height: 50%;
+}
+
+.report-footer-func .addressee-func .addressee-option {
+    padding: 10px;
+    padding-top: 30px;
+}
+
+.report-footer-func input#submit-feedback-btn {
+    height: 100%;
+    width: 100%;
+    padding: 5px;
+    font-size: 20px;
+    background-color: transparent;
+    border-color: #858796;
+    color: #858796;
+    border-radius: 10px;
+}
+
+.report-footer-func input#submit-feedback-btn:hover {
+    background-color: #858796;
+    color: white;
+    transition-duration: 0.2s;
+}
+
+
+.report-footer-func .feedback-section {
+    height: 170px;
+    width: 100%;
+    padding: 8px;
+    border: 2px solid #eaeaea;
+    position: relative;
+}
+
+.report-footer-func .report-fading {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: rgba(0, 0, 0, 0.2);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+
+.badge-jy {
+    background-color: #858796;
+    color: white;
+    display: inline-block;
+    padding: .25em .4em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 5px;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+
+
+.pagination-section {
+    width: 100%;
+    height: 50px;
+    text-align: center;
+}
+
+.pagination>a {
+    font-size: 15px;
+    font-weight: 600;
+    padding: 10px;
+    background-color: white;
+    border: 1px solid #ddd;
+}
+
+.pagination>a.active {
+    background-color: #858796;
+    color: white;
+}
+
+.document-header {
+    padding-left: 285px;
+    margin: 30px;
+    font-size: 30px;
+}
+
+.document-header p {
+    font-weight: bold;
+    font-size: 30px !important;
+}
+
+.btn-loc {
+    padding: 20px;
+    padding-left: 320px;
+}
+
+.btn-custom {
+    font-size: 20px;
+}

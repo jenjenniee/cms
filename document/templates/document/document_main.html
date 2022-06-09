@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'document/css/main.css' %}">
+<link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
+
+{% include 'document/import/tablesorter.html' %}
+{% endblock %}
+{% block content %}
+<script src="{% static 'document/js/main.js' %}"></script>
+<style>
+    .pagination {
+        display: flex;
+    }
+
+</style>
+
+<div class="document-header">
+    <p>결재 - 일일 업무 보고</p>
+</div>
+<div class="document-content" style="text-align: -webkit-center;">
+    <table class="table table-bordered table-reports table-striped table-resizing font-custom" id="table-reports">
+        <thead style="font-size: 20px;">
+            <tr>
+                <th>상태</th>
+                <th>문서명</th>
+                <th>기안자</th>
+                <th>기안일</th>
+                <th>승인자</th>
+                <th>승인일</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if reports %}
+            {% for r in reports %}
+            <tr>
+                <td>{{r.get_dr_status_display}}</td>
+                <td class="exclude-cell">
+                    <a href="/document/daily/read/{{r.pk}}">{{r.dr_title}}</a>
+                </td>
+                <td>{{r.dr_drafter}}</td>
+                <td>{{r.dr_created_at}}</td>
+                <td>{{r.dr_addressee}}</td>
+                <td>{{r.dr_checked_at|default_if_none:""}}</td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <td colspan="6">일일 업무 보고 데이터가 없습니다.</td>
+            {% endif %}
+        </tbody>
+    </table>
+
+    <!-- <input class="btn btn-primary pull-right" id="write-btn" type="button" value="작성"
+        onclick="{% url 'document:document-report-write' %}"> -->
+</div>
+<div class="btn-loc">
+    <a class="btn btn-secondary btn-custom" href="{% url 'document:document-report-write' %}">작성하기</a>
+</div>
+<div class="document-footer">
+    <div class="pagination-section">
+        {% if p %}
+        <ul class="pagination pg-blue justify-content-center">
+            {% if p.has_previous %}
+            <a class="page-link" id="page-link-prev" href="?page={{ p.previous_page_number }}">이전</a>
+            {% endif %}
+            {% for i in range %}
+            <a class="page-link {% if p.number == i %}active{% endif %}" id="page-link-prev" href="?page={{i}}" {% if
+                current==i %}>{{i}}</a>
+            {% endfor %}
+            {% if p.has_next %}
+            <a class="page-link" id="page-link-next" href="?page={{ p.next_page_number }}">다음</a>
+            {% endif %}
+        </ul>
+        {% endif %}
+    </div>
+</div>
+<script>
+    (function () {
+        $("#table-reports").tablesorter({
+            theme: 'default'
+        });
+    })();
+</script>
+{% endblock %}

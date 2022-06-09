@@ -20,3 +20,15 @@ class Answer(models.Model):
     content = models.TextField()
     create_date = models.DateTimeField()
     modify_date = models.DateTimeField(null=True, blank=True)
+
+
+#추가
+# class Comment(models.Model):
+#     post = models.ForeignKey(User, on_delete=models.CASCADE)
+#     author = models.ForeignKey(User, on_delete=models.CASCADE)
+#     content = models.TextField()
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     modified_at = models.DateTimeField(auto_now=True)
+
+#     def __str__(self):
+#         return f'{self.author}::{self.content}'

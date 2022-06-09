@@ -10,7 +10,6 @@
     </div> -->
 {% endblock %}
 {% block content %}
-
 <!-- 썸머노트 -->
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
@@ -60,7 +59,7 @@
 
 
 
-        <div class="content" style="padding-top:80px;">
+        <div class="content">
             {% block board %}
             <form action="{% url 'board:Writeboard' %}" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}

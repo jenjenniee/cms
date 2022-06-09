@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'api',
     'document',
-    #'blog',
     'crispy_forms',
     'notice'
 ]

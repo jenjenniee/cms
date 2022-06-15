@@ -127,8 +127,6 @@
                         <thead>
                             <tr style="text-align: center;">
                                 <th>No</th>
-                                <th>이름</th>
-                                <th>부서</th>
                                 <th>구분</th>
                                 <th>출/퇴근시간</th>
                                 <th>비고</th>
@@ -139,7 +137,6 @@
                             <tr>
                                 <td class="number" style="cursor:hand;">{{ forloop.counter  }}</td>
                                 <td style="cursor:hand;">{{ commute.user.username }}</td>
-                                <td style="cursor:hand;">{{ commute.user.department }}</td>
                                 <td style="cursor:hand;">{{ commute.get_commute_category_display }}</td>
                                 <td style="cursor:hand;">{{ commute.commute_date|date:'Y-m-d H:i:s' }}</td>
                                 <td style="cursor:hand;">{{ commute.commute_reason }}</td>

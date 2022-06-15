@@ -8,13 +8,14 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('',  include('cms.urls')),
     path('cms/', include('cms.urls')),
     path('commute/', include('commute.urls')),
     path('common/', include('common.urls')),
     path('board/', include('board.urls')),
     path('qna/', include('qna.urls')),
     path('api/', include('api.urls')),
-    path('', base_views.index, name='index'),  # '/' 에 해당되는 path
+    path('qna/', base_views.index, name='index'),  # '/' 에 해당되는 path
     path('document/', include('document.urls')),
     path('notice/', include('notice.urls'))
 

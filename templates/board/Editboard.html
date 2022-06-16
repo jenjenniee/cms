@@ -55,17 +55,12 @@
 </style>
 
 <div class="content">
-       
+    <h1>자료실</h1>
 <form action="{% url 'board:Editboard' eb.pk  %}" method="POST" id="formId" value="" enctype="multipart/form-data">
     {% csrf_token %}
 
         <p>제목:</p>
         <input type='text' id='board_title' class="form-control" name='board_title' value="{{ eb.board_title }}"><br>
-        category:<br>
-                <select name="category" class="form-control">
-                    <option value="1">notice</option>
-                    <option value="2">board</option>
-                </select><br>
         <p>첨부파일:</p>
         {% if eb.board_file %}
             <span style="color:gray;">Currently:</span>

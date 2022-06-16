@@ -8,7 +8,7 @@ class ReportTest(TestCase):
     def setUpTestData(cls):
         Report.object.craete(
             dr_drafter = User.objects.get(pk=random.randint(1, 6)),
-            dr_addressee = User.objects.get(user_name='안주영'),
+            dr_addressee = User.objects.get(user_name=' jin'),
             dr_status = '1',
             dr_title = 'TEST CASE에 의해 만들어진 객체'
         )

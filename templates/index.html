@@ -31,10 +31,10 @@
 <body>
     <div class="mem-profile">
         <img width="200" height="200" src="{{ request.user.profile.photo.url }}" >
-            <div class="user-name" style="color:#0f4e78; font-size: 30px;">{{request.user.username}}님</div>
-            <div class="user_department" style="color:#000000; font-size: large;">{{request.user.profile.user_department}}</div>
+            <div class="user-name" style="color:#0f4e78; font-size: 26px; margin-top: 10px;">{{request.user.username}}님</div>
+            <div class="user_department" style="color:#000000; font-size: large; margin-top: 5px;">{{request.user.profile.user_department}}</div>
             <div class="pages">
-              <a href="/commute/home" onclick="location.href='commute_home.html'" class="btn btn-secondary" style="width:200px;">출근 페이지</a>
+              <a href="/commute/home" onclick="location.href='commute_home.html'" class="btn btn-secondary" style="width:200px; margin-top: 10px;">출근 페이지</a>
               <a href="/document" onclick="location.href='commute_home.html'" class="btn btn-secondary" style="margin-top: 10px; width:200px; ">업무보고 페이지</a>
             </div>
     </div>

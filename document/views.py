@@ -17,10 +17,6 @@ def main(request):
 
     user = request.user
 
-    # q = Q() # Q 객체 생성 (조건문을 저장하는거 같다)
-    # q.add(Q(dr_drafter=user), q.OR) # dr_drafter가 user이거나
-    # q.add(Q(dr_addressee=user), q.OR) # dr_addresseerk user인 경우
-
     page = request.GET.get('page', 1)
     reports = DailyReport.objects.filter(Q(dr_drafter=user)|Q(dr_addressee=user)).order_by('-dr_created_at')
     reports, paginator_obj, _range = getPaginatorDatas(page, reports, 15)
@@ -62,7 +58,7 @@ class ReportRead(View):
         report.dr_checked_at = today.strftime("%Y-%m-%d %H:%M:%S") 
         report.save(update_fields=['dr_status', 'dr_feedback', 'dr_checked_at'])
 
-        if request.POST.get('feedback'): # 피드백있으면 이메일전송
+        if request.POST.get('feedback'): # 피드백있으면 유저 이메일로 발송 
             daily_content_list = DailyContent.objects.filter(dc_report=report)
             tommrow_will_list  = TommrowWill.objects.filter(tw_report=report)
             suggestion_list    = Suggestion.objects.filter(s_report=report)
@@ -89,8 +85,8 @@ class ReportRead(View):
             message += tommrow_will_msg
             message += suggestion_msg
             
-
-            email = EmailMessage(f'{report.dr_title} 피드백입니다.',message , to=[send_email,'imzu128@gmail.com'])
+            #피드백 이메일 전송 
+            email = EmailMessage(f'{report.dr_title} 피드백입니다.',message , to=[send_email,'2020011934@cju.ac.kr'])
             email.send()
 
 

@@ -21,8 +21,3 @@ class AnswerForm(forms.ModelForm):
         'content': '답변내용',
     }
 
-#추가
-# class CommentForm(forms.ModelForm):
-#     class Meta:
-#         model = Comment
-#         fields = ('content',)

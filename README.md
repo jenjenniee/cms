@@ -4,7 +4,7 @@ one to one 매칭, 유저 커스텀(AbstractBaseUser), api, 서버 통신에 대
 유저 별 다른 달력 db 제공을 위해 one to one 매칭을 사용하여 유저 테이블 확장 
 달력 데이터 json 변경
 메인 페이지
-![image](https://github.com/jenjenniee/cms/assets/87688936/8d874db3-0fb5-47bb-9d0d-a8cb3efbbe85)
+<img src = "https://github.com/jenjenniee/cms/assets/87688936/8d874db3-0fb5-47bb-9d0d-a8cb3efbbe85.png" width="300" height="200">
 ![image](https://github.com/jenjenniee/cms/assets/87688936/ce9e6f9e-92cb-41a3-849a-c0b85208bd23)
 ![image](https://github.com/jenjenniee/cms/assets/87688936/e6891a6b-9589-40e3-85a3-8ef8636b3d0e)
 
@@ -16,7 +16,8 @@ one to one 매칭, 유저 커스텀(AbstractBaseUser), api, 서버 통신에 대
 
 
 업무보고 페이지
-![image](https://github.com/jenjenniee/cms/assets/87688936/3adfb4d7-4090-470f-b700-74a206addf14)
+![image](https://github.com/jenjenniee/cms/assets/87688936/4cbd457b-858a-434a-921c-ec13281ec928)
+
 
 업무보고 상세 페이지
 ![image](https://github.com/jenjenniee/cms/assets/87688936/68a53da8-c01d-4583-889d-4b6cbbda413e)
